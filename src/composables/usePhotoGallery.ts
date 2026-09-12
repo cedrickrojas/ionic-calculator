@@ -132,9 +132,9 @@ export function usePhotoGallery() {
         quality: 80,
         allowEditing: false,
         resultType: CameraResultType.Uri,
-        // The browser has no camera prompt without extra PWA elements,
-        // so fall back to the native file picker there.
-        source: isNative ? CameraSource.Prompt : CameraSource.Photos,
+        // Prompt lets the user pick the camera or the gallery. In the browser
+        // this is served by @ionic/pwa-elements (registered in main.ts).
+        source: CameraSource.Prompt,
         promptLabelHeader: 'Add a photo',
         promptLabelPhoto: 'Choose from gallery',
         promptLabelPicture: 'Take a picture',

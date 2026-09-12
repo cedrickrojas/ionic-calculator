@@ -4,6 +4,10 @@ import router from './router';
 
 import { IonicVue } from '@ionic/vue';
 
+/* Registers <pwa-camera-modal>, which gives the browser a real camera.
+   Without it @capacitor/camera silently falls back to a file picker. */
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -33,6 +37,8 @@ import '@ionic/vue/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+
+defineCustomElements(window);
 
 const app = createApp(App)
   .use(IonicVue)

@@ -22,9 +22,14 @@ the UI lives in [`src/views/HomePage.vue`](src/views/HomePage.vue).
 
 ### Browser vs. device
 
-The app is platform-aware. On Android it opens the native prompt (camera or gallery); in the
-browser it falls back to the standard file picker, so `ionic serve` is fully testable without any
-native-only dependency. Cancelling the picker or a camera error shows a toast rather than crashing.
+Tapping the FAB opens a prompt with **Take a picture** and **Choose from gallery** on both
+platforms. On Android that is the native camera; in the browser the camera is provided by
+`@ionic/pwa-elements`, which registers `<pwa-camera-modal>` in [`src/main.ts`](src/main.ts).
+
+That registration is required: without it `@capacitor/camera` logs a warning and silently falls
+back to a plain file picker, so the browser would open File Explorer instead of the webcam.
+
+Cancelling the prompt or a camera error shows a toast rather than crashing.
 
 ## Running locally
 

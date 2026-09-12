@@ -19,7 +19,7 @@
           <ion-icon :icon="cameraOutline" />
         </div>
         <h2>No frames captured</h2>
-        <p>Tap the shutter below to take a photo or pull one from your gallery.</p>
+        <p>Tap the shutter below to capture your first photo.</p>
       </div>
 
       <!-- Responsive Ionic grid: 3 across on phones, up to 6 on desktop. -->

@@ -15,4 +15,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  // 8100 is the port Ionic serves on, so `npm run dev` and `ionic serve`
+  // land on the same URL.
+  server: {
+    port: 8100,
+  },
+  preview: {
+    port: 8100,
+  },
 })

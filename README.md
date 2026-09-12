@@ -22,14 +22,14 @@ the UI lives in [`src/views/HomePage.vue`](src/views/HomePage.vue).
 
 ### Browser vs. device
 
-Tapping the FAB opens a prompt with **Take a picture** and **Choose from gallery** on both
-platforms. On Android that is the native camera; in the browser the camera is provided by
-`@ionic/pwa-elements`, which registers `<pwa-camera-modal>` in [`src/main.ts`](src/main.ts).
+Tapping the shutter goes straight to the camera on both platforms - there is no gallery
+picking. On Android that is the device camera; in the browser it is `<pwa-camera-modal>` from
+`@ionic/pwa-elements`, registered in [`src/main.ts`](src/main.ts).
 
 That registration is required: without it `@capacitor/camera` logs a warning and silently falls
 back to a plain file picker, so the browser would open File Explorer instead of the webcam.
 
-Cancelling the prompt or a camera error shows a toast rather than crashing.
+Cancelling the camera or a camera error shows a toast rather than crashing.
 
 ## Running locally
 
@@ -37,6 +37,8 @@ Cancelling the prompt or a camera error shows a toast rather than crashing.
 npm install
 npm run dev        # or: ionic serve
 ```
+
+Both serve on <http://localhost:8100>.
 
 ## Building the Android APK
 

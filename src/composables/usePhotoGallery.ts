@@ -122,7 +122,7 @@ export function usePhotoGallery() {
   }
 
   /**
-   * Opens the camera (or the picker on the web) and adds the result to the gallery.
+   * Opens the camera and adds the captured photo to the gallery.
    * Cancellation and camera errors are surfaced as messages, never as a crash.
    */
   async function addPhoto() {
@@ -132,12 +132,9 @@ export function usePhotoGallery() {
         quality: 80,
         allowEditing: false,
         resultType: CameraResultType.Uri,
-        // Prompt lets the user pick the camera or the gallery. In the browser
-        // this is served by @ionic/pwa-elements (registered in main.ts).
-        source: CameraSource.Prompt,
-        promptLabelHeader: 'Add a photo',
-        promptLabelPhoto: 'Choose from gallery',
-        promptLabelPicture: 'Take a picture',
+        // Camera only — no gallery picking. In the browser this is the
+        // <pwa-camera-modal> registered in main.ts.
+        source: CameraSource.Camera,
       });
 
       const newPhoto = await savePicture(photo);

@@ -1,2 +1,89 @@
-/* For information on how to create your own theme, please refer to:
-http://ionicframework.com/docs/theming/ */
+/* ============================================================
+   Ionic Photo Gallery — "workshop" theme
+   Industrial dark: charcoal surfaces, hairline rules, one
+   burnt-amber accent. The app commits to this look rather than
+   following the OS, so the palette is defined once on :root.
+   ============================================================ */
+
+:root {
+  /* Surfaces, darkest to lightest */
+  --app-bg: #0b0d10;
+  --app-surface: #14171c;
+  --app-surface-raised: #1b1f26;
+
+  /* Hairlines */
+  --app-border: #272c35;
+  --app-border-strong: #363d48;
+
+  /* Type */
+  --app-text: #e6e9ee;
+  --app-text-dim: #8b93a1;
+  --app-text-faint: #5d6472;
+
+  /* Single accent — burnt amber */
+  --app-accent: #e5621e;
+  --app-accent-hover: #f07434;
+  --app-accent-press: #c44f14;
+
+  /* Geometry: tight radii read as engineered rather than playful */
+  --app-radius: 3px;
+  --app-radius-lg: 6px;
+
+  /* ---- Ionic mappings ---- */
+  --ion-background-color: var(--app-bg);
+  --ion-background-color-rgb: 11, 13, 16;
+  --ion-text-color: var(--app-text);
+  --ion-text-color-rgb: 230, 233, 238;
+
+  --ion-border-color: var(--app-border);
+
+  --ion-toolbar-background: var(--app-bg);
+  --ion-toolbar-color: var(--app-text);
+  --ion-item-background: var(--app-surface);
+  --ion-card-background: var(--app-surface);
+
+  --ion-color-primary: var(--app-accent);
+  --ion-color-primary-rgb: 229, 98, 30;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: var(--app-accent-press);
+  --ion-color-primary-tint: #e97336;
+
+  --ion-color-danger: #e5484d;
+  --ion-color-danger-rgb: 229, 72, 77;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-shade: #c93c41;
+  --ion-color-danger-tint: #e95a5f;
+
+  --ion-color-medium: var(--app-text-dim);
+  --ion-color-medium-rgb: 139, 147, 161;
+
+  /* Stepped ramp from background toward text (Ionic dark convention) */
+  --ion-color-step-50: #15181d;
+  --ion-color-step-100: #1e2128;
+  --ion-color-step-150: #262a32;
+  --ion-color-step-200: #2f333c;
+  --ion-color-step-250: #383d46;
+  --ion-color-step-300: #414650;
+  --ion-color-step-350: #4b505b;
+  --ion-color-step-400: #545a65;
+  --ion-color-step-450: #5e6470;
+  --ion-color-step-500: #676e7a;
+  --ion-color-step-550: #717885;
+  --ion-color-step-600: #7a828f;
+  --ion-color-step-650: #848c9a;
+  --ion-color-step-700: #8d96a4;
+  --ion-color-step-750: #97a0af;
+  --ion-color-step-800: #a0aab9;
+  --ion-color-step-850: #aab4c4;
+  --ion-color-step-900: #b3bece;
+  --ion-color-step-950: #bdc8d9;
+
+  /* Tighter gutters than the Ionic default — a gallery should feel dense */
+  --ion-grid-column-padding: 3px;
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--app-text);
+}

@@ -31,9 +31,9 @@ import '@ionic/vue/css/display.css';
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-/* @import '@ionic/vue/css/palettes/dark.always.css'; */
-/* @import '@ionic/vue/css/palettes/dark.class.css'; */
-import '@ionic/vue/css/palettes/dark.system.css';
+/* The gallery commits to a dark look rather than following the OS,
+   so the palette is always-on and theme/variables.css refines it. */
+import '@ionic/vue/css/palettes/dark.always.css';
 
 /* Theme variables */
 import './theme/variables.css';

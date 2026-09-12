@@ -32,3 +32,6 @@ android/captures/
 android/app/src/main/assets/public/
 android/app/src/main/assets/capacitor.config.json
 android/app/src/main/assets/capacitor.plugins.json
+
+# Locally produced APK copies (CI publishes its own artifact)
+*.apk

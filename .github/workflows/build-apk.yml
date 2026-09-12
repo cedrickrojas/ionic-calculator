@@ -40,8 +40,12 @@ jobs:
           java -version
           echo "JAVA_HOME=$JAVA_HOME"
 
+      # compileSdk is 36 (see android/variables.gradle), so pin that platform
+      # explicitly rather than relying on whatever the runner image ships with.
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
 
       - name: Sync web assets into the Android project
         run: npx cap sync android

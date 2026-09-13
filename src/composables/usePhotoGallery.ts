@@ -57,6 +57,16 @@ async function toBase64(data: string | Blob): Promise<string> {
   });
 }
 
+/**
+ * True only when the Filesystem is certain the file is gone. Any other failure
+ * (a locked database, a plugin that is not ready yet) is transient, and pruning
+ * on one would throw away a photo whose bytes are still on disk.
+ */
+function isMissingFile(e: unknown): boolean {
+  const message = e instanceof Error ? e.message : String(e);
+  return /nots*exist|nos*suchs*file|nots*found/i.test(message);
+}
+
 export function usePhotoGallery() {
   const photos = ref<UserPhoto[]>([]);
   const loading = ref(true);
@@ -168,17 +178,25 @@ export function usePhotoGallery() {
       const stored: UserPhoto[] = value ? JSON.parse(value) : [];
 
       const restored: UserPhoto[] = [];
+      let pruned = false;
       for (const photo of stored) {
         try {
           restored.push({ ...photo, webviewPath: await resolveWebviewPath(photo) });
-        } catch {
-          // Skip photos whose file no longer exists instead of failing the load.
+        } catch (e) {
+          if (isMissingFile(e)) {
+            // The file is really gone, so the index entry is dead weight.
+            pruned = true;
+            continue;
+          }
+          // Transient failure: keep the entry, unrendered, so the next launch
+          // can resolve it again instead of losing the photo for good.
+          restored.push({ ...photo, webviewPath: undefined });
         }
       }
 
       photos.value = restored;
-      // Drop any dangling entries so the index stays in sync with the disk.
-      if (restored.length !== stored.length) await cachePhotoIndex();
+      // Rewrite the index only when an entry was genuinely dropped.
+      if (pruned) await cachePhotoIndex();
     } catch (e) {
       error.value = e instanceof Error ? e.message : 'Could not load saved photos.';
       photos.value = [];

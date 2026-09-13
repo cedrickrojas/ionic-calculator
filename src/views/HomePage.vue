@@ -32,19 +32,29 @@
             size-md="3"
             size-lg="2"
           >
-            <button class="tile" :aria-label="'Open photo ' + (i + 1)" @click="viewer = photo">
-              <ion-img :src="photo.webviewPath" />
+            <button
+              class="tile"
+              :disabled="!photo.webviewPath"
+              :aria-label="
+                photo.webviewPath
+                  ? 'Open photo ' + (i + 1)
+                  : 'Photo ' + (i + 1) + ' could not be loaded'
+              "
+              @click="viewer = photo"
+            >
+              <ion-img v-if="photo.webviewPath" :src="photo.webviewPath" />
+              <!-- Kept on screen rather than deleted: the file may still be on
+                   disk, so the next launch gets another chance to load it. -->
+              <span v-else class="tile-unavailable">
+                <ion-icon :icon="imageOutline" />
+              </span>
               <span class="tile-index">{{ String(i + 1).padStart(2, '0') }}</span>
             </button>
           </ion-col>
         </ion-row>
       </ion-grid>
 
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button aria-label="Add photo" @click="addPhoto">
-          <ion-icon :icon="camera" />
-        </ion-fab-button>
-      </ion-fab>
+      <camera-component :disabled="loading" @capture="addPhoto" />
 
       <!-- Camera/storage problems surface here instead of breaking the app. -->
       <ion-toast
@@ -94,8 +104,6 @@ import {
   IonButtons,
   IonCol,
   IonContent,
-  IonFab,
-  IonFabButton,
   IonFooter,
   IonGrid,
   IonHeader,
@@ -108,8 +116,9 @@ import {
   IonToast,
   IonToolbar,
 } from '@ionic/vue';
-import { camera, cameraOutline, close, trash } from 'ionicons/icons';
+import { cameraOutline, close, imageOutline, trash } from 'ionicons/icons';
 import { usePhotoGallery, type UserPhoto } from '@/composables/usePhotoGallery';
+import CameraComponent from '@/components/CameraComponent.vue';
 
 const { photos, loading, error, addPhoto, deletePhoto, loadSaved } = usePhotoGallery();
 
@@ -236,7 +245,24 @@ async function removeViewed() {
   transition: opacity 140ms ease;
 }
 
-.tile:hover {
+.tile-unavailable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.tile-unavailable ion-icon {
+  font-size: 22px;
+  color: var(--app-text-faint);
+}
+
+.tile:disabled {
+  cursor: default;
+}
+
+.tile:hover:not(:disabled) {
   border-color: var(--app-border-strong);
 }
 
@@ -244,7 +270,7 @@ async function removeViewed() {
   opacity: 1;
 }
 
-.tile:active {
+.tile:active:not(:disabled) {
   transform: scale(0.975);
   border-color: var(--app-accent);
 }
@@ -297,21 +323,6 @@ async function removeViewed() {
   font-size: 13px;
   line-height: 1.6;
   color: var(--app-text-dim);
-}
-
-/* ---------- Shutter ---------- */
-ion-fab {
-  margin: 0 6px 6px 0;
-}
-
-ion-fab-button {
-  --background: var(--app-accent);
-  --background-activated: var(--app-accent-press);
-  --background-hover: var(--app-accent-hover);
-  --color: #ffffff;
-  --border-radius: var(--app-radius-lg);
-  --box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
-  --size: 54px;
 }
 
 /* ---------- Viewer ---------- */
